@@ -76,7 +76,7 @@ export default {
           })
           this.event = this.createFreshEvent()
         })
-        .catch(() => console.log('There id problem creating your event'))
+        .catch(() => {})
     },
     createFreshEvent() {
       const user = this.$store.state.user.user
@@ -101,5 +101,19 @@ export default {
 <style scoped>
 .field {
   margin-bottom: 24px;
+}
+.button {
+  color: #fff;
+  border: 1px solid transparent;
+  border-radius: 0.5rem;
+  font-size: 1.2rem;
+  padding: 0.7rem 2rem;
+  cursor: pointer;
+}
+.button:focus {
+  outline: none;
+}
+.-fill-gradient {
+  background: linear-gradient(90deg, #41b782, #86d169);
 }
 </style>
