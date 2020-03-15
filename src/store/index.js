@@ -16,11 +16,23 @@ export default new Vuex.Store({
       'education',
       'food',
       'community'
-    ]
+    ],
+    events: [],
+    eventsTotal: 0,
+    event: {}
   },
   mutations: {
     ADD_EVENT(state, event) {
       state.events.push(event)
+    },
+    SET_EVENTS(state, events) {
+      state.events = events
+    },
+    SET_EVENTS_TOTAL(state, eventsTotal) {
+      state.eventsTotal = eventsTotal
+    },
+    SET_EVENT(state, event) {
+      state.event = event
     }
   },
   actions: {
@@ -28,6 +40,26 @@ export default new Vuex.Store({
       return EventService.postEvent(event).then(() => {
         commit('ADD_EVENT', event)
       })
+    },
+    fetchEvents({ commit }, { perPage, page }) {
+      EventService.getEvents(perPage, page)
+        .then(res => {
+          commit('SET_EVENTS', res.data)
+          commit('SET_EVENTS_TOTAL', res.headers['x-total-count'])
+        })
+        .catch(err => console.log(err))
+    },
+    fetchEvent({ commit, getters }, id) {
+      const event = getters.getEventById(id)
+      if (event) {
+        commit('SET_EVENT', event)
+      } else {
+        EventService.getEvent(id)
+          .then(res => {
+            commit('SET_EVENT', res.data)
+          })
+          .catch(err => console.log(err))
+      }
     }
   },
   modules: {},
