@@ -21,7 +21,7 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import { mapState, mapActions } from 'vuex'
 import EventCard from '@/components/EventCard.vue'
 export default {
   components: {
@@ -30,7 +30,7 @@ export default {
   created() {
     this.perPage = 3
 
-    this.$store.dispatch('fetchEvents', {
+    this.fetchEvents({
       perPage: this.perPage,
       page: this.page
     })
@@ -43,7 +43,8 @@ export default {
       return this.event.eventsTotal > this.page * this.perPage
     },
     ...mapState(['event', 'eventsTotal', 'user'])
-  }
+  },
+  methods: mapActions('event', ['fetchEvents'])
 }
 </script>
 
