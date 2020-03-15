@@ -3,19 +3,21 @@
     <svg class="icon" :width="width" :height="height">
       <use v-bind="{ 'xlink:href': '/feather-sprite.svg#' + name }" />
     </svg>
+    <slot></slot>
   </div>
 </template>
 
 <script>
 export default {
+  name: 'Icon',
   props: {
     name: String,
-    height: {
-      type: [String, Number],
+    width: {
+      type: [Number, String],
       default: 24
     },
-    width: {
-      type: [String, Number],
+    height: {
+      type: [Number, String],
       default: 24
     }
   }
